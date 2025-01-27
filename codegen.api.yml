@@ -1,0 +1,35 @@
+schema: acheev-api/src/gqlTypes/**/*.graphql
+overwrite: true
+generates:
+  ./acheev-api/src/types/gqlTypings.generated.ts:
+    plugins:
+      - add: 
+          content: |
+            /* THIS IS A GENERATED FILE - DO NOT MODIFY */
+      - add: 
+          content: |
+            /* eslint-disable */
+      - add: 
+          content: |
+            import { ApolloContext } from './types';
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+    config:
+      contextType: ApolloContext
+      maybeValue: T | undefined
+      mappers:
+        Completion: ../models/completionModel#CompletionModel
+        PublicUser: ../models/userModel#UserModel
+        Favorite: ../models/favoriteModel#FavoriteModel
+        User: ../models/userModel#UserModel
+        WeightStat: ../models/weightStatModel#WeightStatModel
+        Program: ../models/programModel#ProgramModel
+        ProgramFacet: ../models/programFacetModel#ProgramFacetModel
+        ProgramList: ../models/programListModel#ProgramListModel
+        Workout: ../models/workoutModel#WorkoutModel
+        Circuit: ../models/circuitModel#CircuitModel
+        Exercise: ../models/exerciseModel#ExerciseModel
+        ExerciseSet: ../models/exerciseSetModel#ExerciseSetModel
+        Feedback: ../models/feedbackModel#FeedbackModel
+        Rating: ../models/ratingModel#RatingModel

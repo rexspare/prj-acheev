@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "./build",
+    "rootDir": "./",
+    "target": "es2016",
+    "esModuleInterop": true,
+    "noEmit": false,
+    "sourceMap": true,
+    "strict": true,
+  },
+  "include": [
+    "server.ts"
+  ],
+}

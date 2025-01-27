@@ -1,0 +1,26 @@
+type ScheduledProgramFacet {
+  id: Int!
+  userId: String!
+
+  programFacetId: Int!
+
+  archived: Boolean!
+
+  startDate: DateTime!
+  
+  createdAt: DateTime!
+
+  # Resolved
+  programFacets: [ProgramFacet!]!
+}
+
+type ScheduledWorkout {
+  id: Int!
+  name: String!
+  isCompleted: Boolean!
+  date: DateTime!
+}
+
+extend type Query {
+  scheduledWorkouts: [ScheduledWorkout]!
+}

@@ -1,0 +1,307 @@
+enum SkillLevel {
+  BEGINNER, INTERMEDIATE, ADVANCED, PROFESSIONAL, EXPERT
+}
+
+enum WeightUnit {
+  POUNDS, KILOS
+}
+
+# Each program has many workouts
+type Workout {
+  id: Int!
+  programId: Int!
+  programFacetId: Int!
+
+  skillLevel: SkillLevel!
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean!
+  
+  durationMinutes: Int!
+
+  name: String!
+  imageUrl: String!
+  week: Int!
+  order: Int!
+
+  createdAt:DateTime!
+
+  # Resolved
+  circuits: [Circuit!]!
+  isFavorited: Boolean!
+  programFacet: ProgramFacet!
+
+  isCompleted: Boolean!
+}
+
+input WorkoutInput {
+  programId: Int
+  programFacetId: Int
+
+  skillLevel: SkillLevel
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  durationMinutes: Int
+
+  name: String
+  imageUrl: String
+  week: Int
+  order: Int
+}
+
+# Each workout has many circuits
+type Circuit {
+  id: Int!
+  programId: Int!
+  programFacetId: Int!
+  workoutId: Int!
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean!
+
+  name: String!
+  order: Int!
+
+  createdAt:DateTime!
+
+  # Resolved
+  exercises: [Exercise!]!
+}
+
+input CircuitInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  name: String
+  order: Int
+}
+
+input CircuitXlsxInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  name: String
+  order: Int
+
+  exercises: [ExerciseXlsxInput!]!
+}
+
+type Exercise {
+  id: Int!
+  programId: Int!
+  programFacetId: Int!
+  workoutId: Int!
+  circuitId: Int!
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean!
+
+  name: String!
+  videoUrl: String!
+  restDurationSeconds: Int!
+  description: String!
+  order: Int!
+
+  createdAt:DateTime!
+
+  # Resolved
+  exerciseSets: [ExerciseSet!]!
+}
+
+input ExerciseInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+  circuitId: Int
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  name: String
+  videoUrl: String
+  restDurationSeconds: Int
+  description: String
+  order: Int
+}
+
+input ExerciseXlsxInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+  circuitId: Int
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  name: String
+  videoUrl: String
+  restDurationSeconds: Int
+  description: String
+  order: Int
+
+  sets: [ExerciseSetXlsxInput!]!
+}
+
+type ExerciseSet {
+  id: Int!
+  templateId: Int
+  programId: Int!
+  programFacetId: Int!
+  workoutId: Int!
+  circuitId: Int!
+  exerciseId: Int!
+  
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean!
+
+  order: Int!
+  durationSeconds: Int!
+  repCount: Int
+  weight: Float!
+  weightRelative: Boolean!
+  weightUnit: WeightUnit!
+  distance: Int
+  percentageMax: Float
+  repsAvailable: Boolean
+  maxPercAvailable: Boolean
+
+  createdAt:DateTime!
+}
+
+input ExerciseSetInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+  circuitId: Int
+  exerciseId: Int
+  
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  order: Int
+  durationSeconds: Int
+  repCount: Int
+  weight: Float
+  weightRelative: Boolean
+  weightUnit: WeightUnit
+  distance: Int
+  percentageMax: Float
+  repsAvailable: Boolean
+  maxPercAvailable: Boolean
+}
+
+input ExerciseSetXlsxInput {
+  programId: Int
+  programFacetId: Int
+  workoutId: Int
+  circuitId: Int
+  exerciseId: Int
+
+  completedAt: DateTime
+  startedAt: DateTime
+  archived: Boolean
+
+  order: Int
+  durationSeconds: Int
+  repCount: Int
+  weight: Float
+  weightRelative: Boolean
+  weightUnit: WeightUnit
+  distance: Int
+  percentageMax: Float
+  repsAvailable: Boolean
+  maxPercAvailable: Boolean
+}
+
+type ExerciseSetHistory {
+  id: Int!
+  programId: Int!
+  programFacetId: Int!
+  workoutId: Int!
+  circuitId: Int!
+  exerciseId: Int!
+  exerciseSetId: Int!
+  userId: Int!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ExerciseSetHistoryInput {
+  programId: Int!
+  programFacetId: Int!
+  workoutId: Int!
+  circuitId: Int!
+  exerciseId: Int!
+  exerciseSetId: Int!
+}
+
+input CreateOrModifyExerciseSetInput {
+  exerciseId: Int!
+  exerciseSetId: Int
+
+  weight: Float
+  durationSeconds: Int
+  repCount: Int
+  archived: Boolean
+  distance: Int
+  percentageMax: Float
+  repsAvailable: Boolean
+  maxPercAvailable: Boolean
+}
+
+input CreateCircuitsByXlsxInput {
+  circuits: [CircuitXlsxInput!]!
+}
+
+type CreateCircuitsByXlsxReponse {
+  success: Boolean!
+}
+
+extend type Query {
+  workout(workoutId: Int!): Workout!
+  workouts(programFacetId: Int!, skillLevel: SkillLevel!): [Workout!]!
+
+  exerciseSetHistory: [ExerciseSetHistory]!
+  completedWorkouts: [Completion!]!
+} 
+
+extend type Mutation {
+  createWorkout(workoutInput: WorkoutInput!): Workout!
+  modifyWorkout(workoutId: Int!, workoutInput: WorkoutInput!): Workout!
+
+  createCircuit(circuitInput: CircuitInput!): Circuit!
+  modifyCircuit(circuitId: Int!, circuitInput: CircuitInput!): Circuit!
+
+  createExercise(exerciseInput: ExerciseInput!): Exercise!
+  modifyExercise(exerciseId: Int!, exerciseInput: ExerciseInput!): Exercise!
+
+  createExerciseSet(exerciseSetInput: ExerciseSetInput!): ExerciseSet!
+  modifyExerciseSet(exerciseSetId: Int!, exerciseSetInput: ExerciseSetInput!): ExerciseSet!
+
+  createOrModifyExerciseSet(createOrModifyExerciseSetInput: CreateOrModifyExerciseSetInput!): ExerciseSet!
+
+  createCircuitsByXlsx(createCircuitsByXlsxInput: CreateCircuitsByXlsxInput!): CreateCircuitsByXlsxReponse!
+
+  createExerciseSetHistory(exerciseSetHistoryInput: ExerciseSetHistoryInput!): ExerciseSetHistory!
+}

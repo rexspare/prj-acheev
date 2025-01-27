@@ -1,0 +1,23 @@
+input UpdateWeightInput {
+  weight: Float!
+  date: DateTime!
+  imageUrl: String
+  notes: String
+}
+
+type WeightStat {
+  id: Int!
+  userId: String!
+  weight: Float!
+  date: DateTime!
+  notes: String
+  imageUrl: String
+}
+
+extend type Query {
+  weightStats(userId: String, pagination: Pagination): [WeightStat!]!
+}
+
+extend type Mutation {
+  updateWeight(weightStatId: Int, updateWeightInput: UpdateWeightInput!): WeightStat!
+} 

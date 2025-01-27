@@ -1,0 +1,130 @@
+enum FavoriteModelType {
+  PROGRAM_FACET, WORKOUT
+}
+
+enum CompletionModelType {
+  WORKOUT, CICUIT, EXERCISE, EXERCISE_SET, PROGRAM_FACET, PROGRAM
+}
+
+enum RatingModelType {
+  WORKOUT, PROGRAM, PROGRAM_FACET
+}
+
+type Feedback {
+  id: String!
+  userId: String!
+
+  category: String
+  content: String
+  notes: String
+
+  createdAt: DateTime!
+}
+
+input FeedbackInput {
+  category: String
+  content: String
+}
+
+union Model =  Program | ProgramFacet | Workout | Circuit | Exercise | ExerciseSet
+
+type Favorite {
+  id: Int!
+  userId: String!
+
+  modelType: String!
+  modelId: Int!
+  archived: Boolean!
+}
+
+type Completion {
+  id: Int!
+  userId: String!
+
+  modelType: String!
+  modelId: Int!
+  parentModelType: String
+  parentModelId: Int
+  archived: Boolean!
+  completedAt: DateTime!
+  startedAt: DateTime
+  notes: String
+
+  # Resolved
+  model: Model!
+}
+
+input CompletionInput {
+  startedAt: DateTime
+  modelId: Int!
+  modelType: CompletionModelType!
+  parentModelType: String
+  parentModelId: Int
+  archived: Boolean
+}
+
+type Rating {
+  id: Int!
+  userId: String!
+
+  modelType: RatingModelType!
+  modelId: String!
+
+  ratingChallenge: Int
+  ratingChallengeScale: Int!
+
+  ratingPerformance: Int
+  ratingPerformanceScale: Int!
+
+  ratingEffort: Int
+  ratingEffortScale: Int!
+
+  ratingOverall: Int
+  ratingOverallScale: Int!
+
+  experiencedImprovement: Boolean
+  notes: String
+
+  createdAt: DateTime!
+}
+
+input RatingInput {
+  modelType: RatingModelType!
+  modelId: String!
+
+  ratingChallenge: Int
+  ratingChallengeScale: Int
+
+  ratingPerformance: Int
+  ratingPerformanceScale: Int
+
+  ratingEffort: Int
+  ratingEffortScale: Int
+
+  ratingOverall: Int
+  ratingOverallScale: Int
+
+  experiencedImprovement: Boolean
+  notes: String
+}
+
+extend type Query {
+  isCompleted(userId: String, modelId: String!, modelType: CompletionModelType!): Boolean
+  completions(userId: String, modelType: CompletionModelType, modelId: Int, parentModelType: CompletionModelType, parentModelId: Int): [Completion!]!
+  favorites(userId: String, modelType: FavoriteModelType): [Favorite!]!
+  favoriteWorkouts(userId: String): [Workout!]!
+  favoriteProgramFacets(userId: String): [ProgramFacet!]!
+}
+
+extend type Mutation {
+  submitFeedback(feedbackInput: FeedbackInput): Boolean!
+  submitRating(ratingInput: RatingInput!): Boolean!
+  favorite(modelId: String!, modelType: FavoriteModelType!): Favorite!
+  complete(completionInput: CompletionInput!): Completion!
+} 
+
+mutation Favorite($modelId: String!, $modelType: FavoriteModelType!) {
+  favorite(modelId: $modelId, modelType: $modelType) {
+    id
+  }
+}

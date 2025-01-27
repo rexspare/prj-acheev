@@ -1,0 +1,19 @@
+enum OrderByDirection {
+  ASC, DESC
+}
+
+input OrderBy {
+  column: String!
+  direction: OrderByDirection
+}
+
+input Pagination {
+  page: Int
+  limit: Int
+  query: String
+  orderBy: [OrderBy!]
+}
+
+type Query {
+  version: String!
+}

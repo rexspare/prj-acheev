@@ -1,0 +1,13 @@
+type AdminMetrics {
+  userCount: Int!
+  feedbackCount: Int!
+  ratingCount: Int!
+}
+
+extend type Query {
+  adminUsers(pagination: Pagination): [User!]!
+  adminFeedback(pagination: Pagination): [Feedback!]!
+  adminRatings(pagination: Pagination): [Rating!]!
+  adminMetrics: AdminMetrics!
+}
+

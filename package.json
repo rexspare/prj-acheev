@@ -1,0 +1,29 @@
+{
+  "name": "acheev-mono",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "generate": "yarn generate:api && yarn generate:web-app",
+    "dev": "concurrently --names API 'yarn generate:api --watch' 'yarn generate:web-app --watch' 'yarn generate:mobile-app --watch'",
+    "generate:api": "graphql-code-generator -c codegen.api.yml",
+    "generate:mobile-app": "graphql-code-generator -c codegen.mobile-app.yml",
+    "generate:web-app": "graphql-code-generator -c codegen.web-app.yml"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^3.1.0",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.2",
+    "@graphql-codegen/typescript-resolvers": "^2.4.2",
+    "@playlyfe/gql": "^2.6.2",
+    "@typescript-eslint/parser": "^2.33.0",
+    "concurrently": "^6.5.1",
+    "eslint": "^7.0.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "graphql": "^16.2.0"
+  }
+}

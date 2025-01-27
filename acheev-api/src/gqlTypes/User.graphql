@@ -1,0 +1,138 @@
+type User {
+  id: String!
+  email: String
+
+  title: String
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  phoneNumber: String!
+
+  iosPushToken: String
+  androidPushToken: String
+
+  weightUnit: WeightUnit!
+  skillLevel: SkillLevel!
+
+  location: String
+  imageUrl: String
+  birthday: DateTime
+
+  isCoach: Boolean!
+  admin: Boolean!
+  restrictedAdmin: Boolean!
+  verified: Boolean!
+  private: Boolean!
+  newsletter: Boolean!
+  notifications: Boolean!
+
+  createdAt: DateTime
+}
+
+type PublicUser {
+  id: String!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  location: String
+  imageUrl: String
+}
+
+input UserInput {
+  email: String
+  firstName: String
+  phoneNumber: String!
+  lastName: String
+  password: String
+  imageUrl: String
+  location: String
+  birthday: DateTime
+  title: String
+  private: Boolean
+  newsletter:Boolean
+  notifications: Boolean
+  weightUnit: WeightUnit
+  skillLevel: SkillLevel
+}
+
+input ModifyUserInput {
+  email: String
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  password: String
+  imageUrl: String
+  iosPushToken: String
+  androidPushToken: String
+  birthday: DateTime
+  location: String
+  private: Boolean
+  notifications: Boolean
+  newsletter: Boolean
+  weightUnit: WeightUnit
+  skillLevel: SkillLevel
+
+}
+
+input AdminModifyUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  phoneNumber: String
+  password: String
+  imageUrl: String
+  birthday: DateTime
+  verified: Boolean
+  isCoach: Boolean
+  admin: Boolean
+  restrictedAdmin: Boolean
+  notifications: Boolean
+  weightUnit: WeightUnit
+  skillLevel: SkillLevel
+}
+
+type LoginResponse {
+  user: User!
+  token: String!
+}
+
+
+input ChangePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+  newPasswordConfirmation: String!
+}
+
+type S3SignResponse {
+  signedUrl: String!
+  publicUrl: String!
+  fileName: String!
+  fileKey: String!
+}
+
+type S3DeleteResponse {
+  success: Boolean!
+  message: String!
+}
+
+extend type Query {
+  me: LoginResponse
+  user(userId: String!): PublicUser!
+  signUrl(objectName: String!, contentType: String!): S3SignResponse!
+}
+
+extend type Mutation {
+  register(userInput: UserInput!): LoginResponse!
+  login(phoneNumber: String, email: String, password: String!): LoginResponse!
+  adminModifyUser(userId: String, modifyUserInput: AdminModifyUserInput!): User!
+  modifyUser(userId: String, modifyUserInput: ModifyUserInput!): User!
+  changePassword(userId: String, changePasswordInput: ChangePasswordInput!): Boolean!
+  adminChangePassword(userId: String!, newPassword: String!): Boolean!
+  forgotPasswordRequest(phoneNumber: String, email: String): Boolean!
+  resetPassword(resetPasswordToken: String!, newPassword: String!): Boolean!
+
+  requestOtp(phoneNumber: String!): Boolean!
+  verifyOtp(phoneNumber: String!, otp: String!): LoginResponse!
+
+  deleteS3Object(fileKey: String!): S3DeleteResponse!
+} 

@@ -1,0 +1,332 @@
+patch-package
+--- a/node_modules/react-native-highlight-tooltip/index.js
++++ b/node_modules/react-native-highlight-tooltip/index.js
+@@ -29,8 +29,8 @@ const index = ({
+   onPressHighlight,
+ }) => {
+   if (customTooltip) {
+-    const {style, message} = customTooltip;
+-    const {width, height} = style;
++    const { style, message } = customTooltip;
++    const { width, height } = style;
+     if (message === undefined) {
+       throw new Error(`The message of the custom tooltip is required.`);
+     }
+@@ -50,7 +50,7 @@ const index = ({
+     }
+   }
+ 
+-  const {style, message, textStyle} = customTooltip || {};
++  const { style, message, textStyle } = customTooltip || {};
+ 
+   const opacityAnimation = useRef(new Animated.Value(0)).current;
+ 
+@@ -298,156 +298,166 @@ const index = ({
+         onRequestClose={() => {
+           onRequestClose();
+         }}>
+-        <StatusBar
+-          animated={true}
+-          backgroundColor={overlayColor || 'rgba(0, 0, 0, 0.5)'}
+-        />
+-        {componentPositionOnScreen ? (
+-          <View
+-            style={{
+-              flex: 1,
+-              position: 'relative',
+-            }}>
+-            {/* top overlay */}
++        <TouchableOpacity
++          style={{ flex: 1 }}
++          activeOpacity={1}
++          onPress={() => {
++            if (onPressHighlight) {
++              onPressHighlight();
++            }
++          }}
++        >
++          <StatusBar
++            animated={true}
++            backgroundColor={overlayColor || 'rgba(0, 0, 0, 0.5)'}
++          />
++          {componentPositionOnScreen ? (
+             <View
+               style={{
+-                backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
+-                height: componentPositionOnScreen?.y,
+-                width: '100%',
+-                position: 'absolute',
+-                top: 0,
+-                left: 0,
+-                marginTop: 0,
+-                marginBottom: 0,
+-                marginLeft: 0,
+-                marginRight: 0,
+-              }}></View>
+-            {/* bottom overlay */}
++                flex: 1,
++                position: 'relative',
++              }}>
++              {/* top overlay */}
++              <View
++                style={{
++                  backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
++                  height: componentPositionOnScreen?.y,
++                  width: '100%',
++                  position: 'absolute',
++                  top: 0,
++                  left: 0,
++                  marginTop: 0,
++                  marginBottom: 0,
++                  marginLeft: 0,
++                  marginRight: 0,
++                }}></View>
++              {/* bottom overlay */}
++              <View
++                style={{
++                  backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
++                  height: '100%',
++                  width: '100%',
++                  position: 'absolute',
++                  top:
++                    componentPositionOnScreen?.y +
++                    componentPositionOnScreen?.height,
++                  left: 0,
++                }}></View>
++              {/* right Side */}
++              <View
++                style={{
++                  backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
++                  height: componentPositionOnScreen?.height,
++                  width: '100%',
++                  position: 'absolute',
++                  top: componentPositionOnScreen?.y,
++                  left:
++                    componentPositionOnScreen?.x +
++                    componentPositionOnScreen?.width,
++                }}></View>
++              {/* left Side */}
++              <View
++                style={{
++                  backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
++                  height: componentPositionOnScreen?.height,
++                  width: componentPositionOnScreen?.x,
++                  position: 'absolute',
++                  top: componentPositionOnScreen?.y,
++                  left: 0,
++                }}></View>
++
++              <Animated.View
++                style={{
++                  position: 'absolute',
++                  top: componentPositionOnScreen?.y,
++                  left: componentPositionOnScreen?.x,
++                  height: componentPositionOnScreen?.height,
++                  width: componentPositionOnScreen?.width,
++                  backgroundColor: 'transparent',
++                  zIndex: 99,
++                  opacity: opacityAnimation,
++                }}>
++                {/* ToolTip */}
++                {message ? (
++                  <View
++                    style={[
++                      style,
++                      {
++                        position: 'absolute',
++                        zIndex: 99,
++                        backgroundColor: style?.backgroundColor || 'white',
++                        ...toolTipPosition,
++                      },
++                    ]}>
++                    <Text
++                      style={{
++                        ...textStyle,
++                        color: textStyle?.color || 'white',
++                      }}>
++                      {message}
++                    </Text>
++                    <View
++                      style={{
++                        ...toolTipArrowPosition,
++                        width: 20,
++                        height: 20,
++                        zIndex: -1,
++                        position: 'absolute',
++                        backgroundColor: style?.backgroundColor || 'white',
++                        transform: [{ rotate: '45deg' }],
++                      }}></View>
++                  </View>
++                ) : (
++                  toolTipPosition && (
++                    <Tooltip
++                      tooltipStyle={{
++                        position: 'absolute',
++                        height: 100,
++                        width: 220,
++                        padding: 15,
++                        zIndex: 99,
++                        backgroundColor: 'black',
++                        borderRadius: 10,
++                        ...toolTipPosition,
++                      }}
++                      arrowStyle={{
++                        ...toolTipArrowPosition,
++                        width: 20,
++                        height: 20,
++                        zIndex: -1,
++                        position: 'absolute',
++                        backgroundColor: 'black',
++                        transform: [{ rotate: '45deg' }],
++                      }}
++                      message={tooltipText}
++                    />
++                  )
++                )}
++                <TouchableOpacity
++                  onPress={() => {
++                    if (onPressHighlight) {
++                      onPressHighlight();
++                    }
++                  }}
++                  style={{
++                    flex: 1,
++                    backgroundColor: 'transparent',
++                  }}></TouchableOpacity>
++              </Animated.View>
++            </View>
++          ) : (
+             <View
+               style={{
+-                backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
+-                height: '100%',
+-                width: '100%',
+                 position: 'absolute',
+-                top:
+-                  componentPositionOnScreen?.y +
+-                  componentPositionOnScreen?.height,
++                top: 0,
++                bottom: 0,
+                 left: 0,
+-              }}></View>
+-            {/* right Side */}
+-            <View
+-              style={{
+-                backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
+-                height: componentPositionOnScreen?.height,
+-                width: '100%',
+-                position: 'absolute',
+-                top: componentPositionOnScreen?.y,
+-                left:
+-                  componentPositionOnScreen?.x +
+-                  componentPositionOnScreen?.width,
+-              }}></View>
+-            {/* left Side */}
+-            <View
+-              style={{
++                right: 0,
+                 backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
+-                height: componentPositionOnScreen?.height,
+-                width: componentPositionOnScreen?.x,
+-                position: 'absolute',
+-                top: componentPositionOnScreen?.y,
+-                left: 0,
++                zIndex: 1,
+               }}></View>
+-
+-            <Animated.View
+-              style={{
+-                position: 'absolute',
+-                top: componentPositionOnScreen?.y,
+-                left: componentPositionOnScreen?.x,
+-                height: componentPositionOnScreen?.height,
+-                width: componentPositionOnScreen?.width,
+-                backgroundColor: 'transparent',
+-                zIndex: 99,
+-                opacity: opacityAnimation,
+-              }}>
+-              {/* ToolTip */}
+-              {message ? (
+-                <View
+-                  style={[
+-                    style,
+-                    {
+-                      position: 'absolute',
+-                      zIndex: 99,
+-                      backgroundColor: style?.backgroundColor || 'white',
+-                      ...toolTipPosition,
+-                    },
+-                  ]}>
+-                  <Text
+-                    style={{
+-                      ...textStyle,
+-                      color: textStyle?.color || 'white',
+-                    }}>
+-                    {message}
+-                  </Text>
+-                  <View
+-                    style={{
+-                      ...toolTipArrowPosition,
+-                      width: 20,
+-                      height: 20,
+-                      zIndex: -1,
+-                      position: 'absolute',
+-                      backgroundColor: style?.backgroundColor || 'white',
+-                      transform: [{rotate: '45deg'}],
+-                    }}></View>
+-                </View>
+-              ) : (
+-                toolTipPosition && (
+-                  <Tooltip
+-                    tooltipStyle={{
+-                      position: 'absolute',
+-                      height: 100,
+-                      width: 220,
+-                      padding: 15,
+-                      zIndex: 99,
+-                      backgroundColor: 'black',
+-                      borderRadius: 10,
+-                      ...toolTipPosition,
+-                    }}
+-                    arrowStyle={{
+-                      ...toolTipArrowPosition,
+-                      width: 20,
+-                      height: 20,
+-                      zIndex: -1,
+-                      position: 'absolute',
+-                      backgroundColor: 'black',
+-                      transform: [{rotate: '45deg'}],
+-                    }}
+-                    message={tooltipText}
+-                  />
+-                )
+-              )}
+-              <TouchableOpacity
+-                onPress={() => {
+-                  if (onPressHighlight) {
+-                    onPressHighlight();
+-                  }
+-                }}
+-                style={{
+-                  flex: 1,
+-                  backgroundColor: 'transparent',
+-                }}></TouchableOpacity>
+-            </Animated.View>
+-          </View>
+-        ) : (
+-          <View
+-            style={{
+-              position: 'absolute',
+-              top: 0,
+-              bottom: 0,
+-              left: 0,
+-              right: 0,
+-              backgroundColor: overlayColor || 'rgba(0, 0, 0, 0.5)',
+-              zIndex: 1,
+-            }}></View>
+-        )}
++          )}
++        </TouchableOpacity>
+       </Modal>
+     );
+   }

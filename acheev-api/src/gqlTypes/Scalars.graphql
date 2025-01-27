@@ -1,0 +1,8 @@
+scalar DateTime
+scalar Date
+scalar Time
+scalar JSON
+
+enum DayOfWeek {
+  SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+}

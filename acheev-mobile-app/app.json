@@ -1,0 +1,84 @@
+{
+  "name": "Acheev",
+  "displayName": "Acheev",
+  "expo": {
+    "name": "Acheev",
+    "icon": "./src/assets/images/icon.png",
+    "slug": "Acheev",
+    "privacy": "unlisted",
+    "version": "1.0.0",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "backgroundColor": "#300197"
+    },
+    "android": {
+      "package": "com.acheev.Acheev",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "READ_CONTACTS"
+      ],
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD58a6uLV-lKcSeD27xRkDpoOoRvJ40HP4"
+        }
+      },
+      "userInterfaceStyle": "automatic"
+    },
+    "ios": {
+      "usesAppleSignIn": true,
+      "bundleIdentifier": "com.acheev.performance",
+      "buildNumber": "0.0.8",
+      "infoPlist": {
+        "CFBundleURLTypes": {
+          "CFBundleURLSchemes": [
+            "fb206613710435587"
+          ]
+        },
+        "LSApplicationQueriesSchemes": [
+          "comgooglemaps",
+          "citymapper",
+          "uber",
+          "lyft",
+          "waze",
+          "fbapi",
+          "fbapi20130214",
+          "fbapi20130410",
+          "fbapi20130702",
+          "fbapi20131010",
+          "fbapi20131219",
+          "fbapi20140410",
+          "fbapi20140116",
+          "fbapi20150313",
+          "fbapi20150629",
+          "fbapi20160328",
+          "fbauth",
+          "fb-messenger-share-api",
+          "fbauth2",
+          "fbshareextension"
+        ],
+        "NSLocationWhenInUseUsageDescription": "Location is used to map user to a Acheev request",
+        "NSCameraUsageDescription": "The camera is used to select a profile photo for user accounts",
+        "NSPhotoLibraryUsageDescription": "Photos are used to select a profile photo for user accounts",
+        "NSPhotoLibraryAddUsageDescription": "Photos are used to select a profile a photo",
+        "NSContactsUsageDescription": "Contacts are used to find friends who are already on Acheev"
+      },
+      "userInterfaceStyle": "automatic"
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "55108ebe-6f04-4bc3-b59c-588ed8788538"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}

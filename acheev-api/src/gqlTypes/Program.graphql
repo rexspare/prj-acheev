@@ -1,0 +1,98 @@
+enum SkillLevel {
+  BEGINNER, INTERMEDIATE, ADVANCED, PROFESSIONAL, EXPERT
+}
+
+enum WeightUnit {
+  POUNDS, KILOS
+}
+
+type Program {
+  id: Int!
+  name: String!
+  imageUrl: String!
+
+  live: Boolean!
+  archived: Boolean!
+  
+  createdAt: DateTime!
+
+  # Resolved
+  programFacets: [ProgramFacet!]!
+}
+
+input ProgramInput {
+  name: String
+  imageUrl: String
+  live: Boolean
+  archived: Boolean
+}
+
+type ProgramFacet {
+  id: Int!
+  programId: Int!
+  name: String!
+  imageUrl: String!
+  order: Int!
+
+  live: Boolean!
+  archived: Boolean!
+
+  videoUrl: String
+  description: String
+  equipmentNeeded: String
+  goals: String
+
+  createdAt: DateTime!
+
+  # Resolved
+  program: Program!
+  isFavorited: Boolean!
+}
+
+type ProgramFacetStats {
+  weekCount: Int!
+  workoutCount: Int!
+  workoutLength: String!
+}
+
+input ProgramFacetInput {
+  programId: Int
+  name: String
+  imageUrl: String
+  order: Int
+  live: Boolean
+  archived: Boolean
+  videoUrl: String
+  description: String
+  equipmentNeeded: String
+  goals: String
+}
+
+# A grouping of programs
+type ProgramList {
+  id: Int!
+  name: String!
+  programs: [Program!]!
+}
+
+extend type Query {
+  program(programId: Int!): Program!
+  programs(pagination: Pagination): [Program!]!
+  adminPrograms(pagination: Pagination): [Program!]!
+  programSearch(query: String!): [Program!]!
+
+  programLists: [ProgramList!]!
+
+  inProgressProgramFacets(userId: String): [ProgramFacet!]!
+
+  programFacet(programFacetId: Int!): ProgramFacet!
+  programFacetStats(programFacetId: Int!, skillLevel: SkillLevel!): ProgramFacetStats!
+} 
+
+extend type Mutation {
+  createProgram(programInput: ProgramInput!): Program!
+  modifyProgram(programId: Int!, programInput: ProgramInput!): Program!
+
+  createProgramFacet(programFacetInput: ProgramFacetInput!): ProgramFacet!
+  modifyProgramFacet(programFacetId: Int!, programFacetInput: ProgramFacetInput!): ProgramFacet!
+}

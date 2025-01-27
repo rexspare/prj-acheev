@@ -1,0 +1,75 @@
+enum ChatEvents {
+  NEW_MESSAGE
+  UPDATE_MESSAGE
+  DELETE_MESSAGE
+}
+
+type ChatMessage {
+  id: Int!
+  senderId: String!
+  programId: Int!
+  replyToId: Int
+
+  sender: User!
+  replyTo: ReplyToMessage
+  readBy: [User!]!
+
+  text: String
+  mediaUrl: String
+  mediaType: String
+
+  isEdited: Boolean!
+  isDeleted: Boolean!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+}
+
+type ReplyToMessage {
+  id: Int!
+  senderId: String!
+  programId: Int!
+  replyToId: Int
+
+  text: String
+  mediaUrl: String
+  mediaType: String
+
+  isEdited: Boolean!
+  isDeleted: Boolean!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  sender: User!
+}
+
+type PaginationMeta {
+  total: Int!
+  page: Int!
+  limit: Int!
+  totalPages: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type ProgramMessagesResponse {
+  data: [ChatMessage!]!
+  meta: PaginationMeta!
+}
+
+extend type Query {
+  getProgramMessages(programId: Int!, pagination: Pagination, historyMessageId: Int): ProgramMessagesResponse!
+}
+
+extend type Mutation {
+  sendMessage(programId: Int!, replyToId: Int, text: String, mediaUrl: String, mediaType: String): ChatMessage!
+  editMessage(messageId: Int!, text: String, mediaUrl: String, mediaType: String): ChatMessage!
+  deleteMessage(messageId: Int!): ChatMessage!
+  readMessage(messageId: Int!, userId: String!): ChatMessage!
+}
+
+type Subscription {
+  newMessage: ChatMessage! 
+}

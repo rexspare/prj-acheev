@@ -1,0 +1,20 @@
+schema: acheev-api/src/gqlTypes/**/*.graphql
+documents:
+  - acheev-web-app/src/**/*.tsx
+  - acheev-web-app/src/**/*.ts
+overwrite: true
+generates:
+  ./acheev-web-app/src/types/gqlReactTypings.generated.d.tsx:
+    plugins:
+      - add: 
+          content: |
+            /* THIS IS A GENERATED FILE - DO NOT MODIFY */
+      - add: 
+          content: |
+            /* eslint-disable */
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      maybeValue: T | undefined
+      withHooks: true 
