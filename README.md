@@ -5,9 +5,9 @@ Acheev is a comprehensive fitness platform designed to empower fitness enthusias
 
 
 ## 📱 Live Demo
-Try out ACHEEV APP live on your device!
-- **Android:** [Live App]([https://play.google.com/store/apps/details?id=com.tasdatingkit](https://play.google.com/store/apps/details?id=com.acheev.performance)) 
-- **iOS:** [Live App]([[https://play.google.com/store/apps/details?id=com.tasdatingkit](https://play.google.com/store/apps/details?id=com.acheev.performance](https://apps.apple.com/us/app/acheev-performance-app/id1636595346))) 
+Try out ACHEEV App live on your device!
+- **Android:** [Live App](https://play.google.com/store/apps/details?id=com.acheev.performance) 
+- **iOS:** [Live App](https://apps.apple.com/us/app/acheev-performance-app/id1636595346) 
 
 ## 📂 Project Structure
 
