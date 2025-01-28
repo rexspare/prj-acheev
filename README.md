@@ -4,6 +4,11 @@
 Acheev is a comprehensive fitness platform designed to empower fitness enthusiasts with expert training guidelines, video tutorials, and progress tracking. It also fosters a supportive community where users can connect with coaches and other fitness enthusiasts. This monorepo contains all the essential components required for Acheev to deliver a seamless experience.
 
 
+## 📱 Live Demo
+Try out ACHEEV APP live on your device!
+- **Android:** [Live App]([https://play.google.com/store/apps/details?id=com.tasdatingkit](https://play.google.com/store/apps/details?id=com.acheev.performance)) 
+- **iOS:** [Live App]([[https://play.google.com/store/apps/details?id=com.tasdatingkit](https://play.google.com/store/apps/details?id=com.acheev.performance](https://apps.apple.com/us/app/acheev-performance-app/id1636595346))) 
+
 ## 📂 Project Structure
 
 ### Node.js Server
