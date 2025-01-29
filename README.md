@@ -13,21 +13,21 @@ Try out ACHEEV App live on your device!
 
 ### Node.js Server
 
-1- Backend server with GraphQL API for efficient data handling and communication.  
-2- Features include user authentication, training program management, video streaming, and community chat functionalities.
+- Backend server with GraphQL API for efficient data handling and communication.
+- Features include user authentication, training program management, video streaming, and community chat functionalities.
 
 ### Web-Based Admin Panel
 
-1- A web interface for administrators and coaches to manage platform content, user progress, and training programs.  
-2- Allows the creation and organization of training videos, exercise sets/reps, and community moderation.
+- A web interface for administrators and coaches to manage platform content, user progress, and training programs.  
+- Allows the creation and organization of training videos, exercise sets/reps, and community moderation.
 
 ### React Native Mobile App
 
 #### A mobile-first experience for users to:
-1- Access personalized training programs.  
-2- Watch instructional videos.  
-2- Track sets, reps, and overall progress.  
-4- Participate in a community chat to interact with other users and coaches.
+- Access personalized training programs.  
+- Watch instructional videos.  
+- Track sets, reps, and overall progress.  
+- Participate in a community chat to interact with other users and coaches.
 
 
 ## 🚀 Features
